@@ -1,0 +1,42 @@
+<div class="banner-item bg-overlay" style="background-image:url(/assets/images/theatre.jpg)">
+   <div class="container">
+    <div class="banner-content text-center">
+
+     <mat-card class="Container">
+        <mat-card-header class="innerContainer"> 
+          <div class="Movie">
+              <h3 class="Movie_title">{{Movie}}</h3>
+              <div class="Movie_details">{{Screen_No}} - {{Time}}</div>
+          </div>
+        </mat-card-header>  <br>
+
+        <div class="Avenger">
+            <span class="glyphicon glyphicon-stop freeSeat"></span> EMPTY
+            <span class="glyphicon glyphicon-ban-circle reservedSeat padding-left"></span> RESERVED
+            <span class="glyphicon glyphicon-ok-sign selectedSeat padding-left"></span> SELECTED                
+        </div><br>
+
+        <div *ngFor="let row of rows">
+            <span class="seat" *ngFor="let col of cols" (click)="seatClicked(row + col)" 
+                    [ngSwitch]="getStatus(row + col)">
+                <span *ngSwitchCase="'selected'" class="glyphicon glyphicon-ok-sign selectedSeat"></span>
+                <span *ngSwitchCase="'reserved'" class="glyphicon glyphicon-ban-circle reservedSeat"></span>
+                <span *ngSwitchDefault class="glyphicon glyphicon-stop freeSeat"></span>
+            </span>
+        </div>
+
+        <div *ngIf="selected.length > 0" class="font14 marginTB10">
+            <div class="wordWrap">SEATS RESERVED : {{selected.length}}</div>
+            <div>PRICE : {{ticketPrice}} * {{selected.length}} = {{currency}}.{{ticketPrice*selected.length}} </div>
+            <div>CONVENIENCE FEE : {{currency}}.{{convFee}}</div>
+            <div>TOTAL : {{currency}}.{{ticketPrice * selected.length + convFee}}</div>
+        </div>
+
+        <div class="buttonBar marginTop5">
+            <button mat-raised-button class="button1" (click)="clearSelected()" [disabled]="selected.length === 0">Clear</button>
+            <button mat-raised-button class="button2" (click)="showSelected()" [disabled]="selected.length === 0">Buy Tickets</button>
+        </div>        
+    </mat-card>
+    </div>
+   </div>
+</div>        
